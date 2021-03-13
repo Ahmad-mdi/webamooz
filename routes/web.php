@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,4 @@ Route::get('adminPanel', function () {
     return view('admin.index');
 });
 
+Route::resource('category',CategoryController::class);

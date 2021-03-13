@@ -38,6 +38,9 @@
         </ul>
     </div>
 
+    <div class="main-content">
+        @yield('content')
+    </div>
 
     <!-- <div class="main-content">
         <div class="row no-gutters font-size-13 margin-bottom-10">
