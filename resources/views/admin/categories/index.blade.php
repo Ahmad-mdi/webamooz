@@ -19,17 +19,17 @@
                         </thead>
                         <tbody>
                         @foreach($categories as $category)
-                            <tr role="row" class="">
-                                <td><a href="">{{$category->id}}</a></td>
-                                <td><a href="">{{$category->title_fa}}</a></td>
-                                <td>{{$category->title_en}}</td>
-                                <td>ندارد</td>
-                                <td>
-                                    <a href="" class="item-delete mlg-15" title="حذف"></a>
-                                    <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
-                                    <a href="edit-category.html" class="item-edit " title="ویرایش"></a>
-                                </td>
-                            </tr>
+                        <tr role="row" class="">
+                            <td><a href="">{{$category->id}}</a></td>
+                            <td><a href="">{{$category->title_fa}}</a></td>
+                            <td>{{$category->title_en}}</td>
+                            <td>{{optional($category->parent)->title_fa}}</td>
+                            <td>
+                                <a href="" class="item-delete mlg-15" title="حذف"></a>
+                                <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
+                                <a href="edit-category.html" class="item-edit " title="ویرایش"></a>
+                            </td>
+                        </tr>
                         @endforeach
 
                         </tbody>
@@ -42,14 +42,17 @@
                     @csrf
                     <input name="title_fa" type="text" placeholder="نام دسته بندی" class="text">
                     <input name="title_en" type="text" placeholder="نام انگلیسی دسته بندی" class="text">
-                    {{--<p class="box__title margin-bottom-15">انتخاب دسته پدر</p>
-                    <select name="" id="">
-                        <option value="0">ندارد</option>
-                        <option value="0">برنامه نویسی</option>
-                    </select>--}}
+                    <p class="box__title margin-bottom-15">انتخاب دسته پدر</p>
+                    <select name="category_id" >
+                        <option value selected>دسته پدر ندارد</option>
+                        @foreach($categories as $parent)
+                            <option value="{{$parent->id}}">{{$parent->title_fa}}</option>
+                        @endforeach
+                    </select>
                     <button class="btn btn-brand">اضافه کردن</button>
                 </form>
             </div>
         </div>
+    </div>
 
 @endsection
