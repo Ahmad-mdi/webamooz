@@ -14,30 +14,48 @@
                             <th>نام دسته بندی</th>
                             <th>نام انگلیسی دسته بندی</th>
                             <th>دسته پدر</th>
-                            <th>عملیات</th>
+                            <th>ویرایش</th>
+                            <th>حذف</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($categories as $category)
-                        <tr role="row" class="">
-                            <td><a href="">{{$category->id}}</a></td>
-                            <td><a href="">{{$category->title_fa}}</a></td>
-                            <td>{{$category->title_en}}</td>
-                            <td>{{optional($category->parent)->title_fa}}</td>
-                            <td>
-                                <a href="" class="item-delete mlg-15" title="حذف"></a>
-                                <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
-                                <a href="edit-category.html" class="item-edit " title="ویرایش"></a>
-                            </td>
-                        </tr>
+                            <tr role="row" class="">
+                                <td><a href="">{{$category->id}}</a></td>
+                                <td><a href="">{{$category->title_fa}}</a></td>
+                                <td>{{$category->title_en}}</td>
+                                @if (!optional($category->parent)->title_fa)
+                                    <td><b class="text-warning">والد</b></td>
+                                @else
+                                    <td>{{optional($category->parent)->title_fa}}</td>
+                                @endif
+                                <td>
+                                    <a href="{{route('category.edit',$category->id)}}" class="item-edit " title="ویرایش"></a>
+                                </td>
+                                <td>
+                                    <form action="{{route('category.destroy',$category->id)}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="item-delete bg-white" type="submit"></button>
+                                    </form>
+                                </td>
+                            </tr>
                         @endforeach
-
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد دسته بندی جدید</p>
+                @if ($errors->any())
+                    <div class="text-warning">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="{{route('category.store')}}" method="post" class="padding-30">
                     @csrf
                     <input name="title_fa" type="text" placeholder="نام دسته بندی" class="text">

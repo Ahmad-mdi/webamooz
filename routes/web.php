@@ -19,6 +19,7 @@ Route::get('/', function () {
     return view('client.index');
 });
 
+//AdminPanel:
 Route::prefix('adminPanel')->group(function (){
 
     Route::resource('/',PanelController::class);
