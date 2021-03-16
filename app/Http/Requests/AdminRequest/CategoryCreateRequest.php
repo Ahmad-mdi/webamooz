@@ -25,6 +25,15 @@ class CategoryCreateRequest extends FormRequest
     {
         return [
             'title_fa' => 'required|unique:categories,title_fa',
+            'title_en' => 'unique:categories,title_en',
         ];
     }
+
+   /* public function messages()
+    {
+        return [
+          'title_fa.required' => 'فیلد دسته بندی فارسی نمیتواند خالی باشد'
+        ];
+    }*/
+
 }

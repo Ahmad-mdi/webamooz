@@ -39,7 +39,7 @@ class CategoryController extends Controller
     public function store(CategoryCreateRequest $request)
     {
         Category::query()->create([
-            'category_id' => $request->get('category_id'),
+            'parent_id' => $request->get('parent_id'),
             'title_fa' => $request->get('title_fa'),
             'title_en' => $request->get('title_en'),
         ]);
@@ -79,7 +79,7 @@ class CategoryController extends Controller
     public function update(Request $request , Category $category)
     {
         $category->update([
-            'category_id' => $request->get('category_id'),
+            'parent_id' => $request->get('parent_id'),
             'title_fa' => $request->get('title_fa'),
             'title_en' => $request->get('title_en'),
         ]);
