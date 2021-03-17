@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest\CategoryCreateRequest;
+use App\Http\Requests\AdminRequest\CategoryUpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -26,8 +27,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('admin.categories.index',compact('categories'));
+        $categories = Category::query()->paginate(6); //for categoryList
+        $selectCategory = Category::all();
+        return view('admin.categories.index',compact('categories','selectCategory'));
     }
 
     /**
@@ -76,7 +78,7 @@ class CategoryController extends Controller
      * @param Category $category
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request , Category $category)
+    public function update(CategoryUpdateRequest $request , Category $category)
     {
         $category->update([
             'parent_id' => $request->get('parent_id'),

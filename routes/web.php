@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController\CategoryController;
 use App\Http\Controllers\AdminController\PanelController;
+use App\Http\Controllers\ClientController\indexController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('client.index');
-});
+Route::get('/', [indexController::class,'index']);
 
 //AdminPanel:
 Route::prefix('adminPanel')->group(function (){
