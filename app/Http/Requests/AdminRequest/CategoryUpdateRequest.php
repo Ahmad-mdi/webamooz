@@ -25,7 +25,7 @@ class CategoryUpdateRequest extends FormRequest
     {
         return [
             'title_fa' => 'required|unique:categories,title_fa',
-            'title_en' => 'unique:categories,title_en',
+            'title_en' => 'required|unique:categories,title_en',
         ];
     }
 }
