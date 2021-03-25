@@ -15,13 +15,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Client:
 Route::get('/', [indexController::class,'index']);
 
 //AdminPanel:
 Route::prefix('adminPanel')->group(function (){
-
     Route::resource('/',PanelController::class);
     Route::resource('category',CategoryController::class);
-
 });

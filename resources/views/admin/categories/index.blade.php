@@ -43,8 +43,8 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{$categories->links()}}
                 </div>
+                {{$categories->links()}}
             </div>
             @include('admin.categories.create')
         </div>
