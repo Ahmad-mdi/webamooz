@@ -45,6 +45,7 @@
                     </table>
                 </div>
                 {{$categories->links()}}
+
             </div>
             @include('admin.categories.create')
         </div>

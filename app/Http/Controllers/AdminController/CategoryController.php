@@ -27,8 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::query()->paginate(6);//for listCategory
-        $selectCategory = Category::all();
+        $categories = Category::query()->paginate(6); //for categoryList
+        $selectCategory = Category::all(); //for selectCategory
         return view('admin.categories.index',compact('categories','selectCategory'));
     }
 
