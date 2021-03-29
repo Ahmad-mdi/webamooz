@@ -45,7 +45,7 @@ class CategoryController extends Controller
             'title_fa' => $request->get('title_fa'),
             'title_en' => $request->get('title_en'),
         ]);
-        return back();
+        return back()->with('success','دسته با موفقیت افزوده شد');
     }
 
     /**
