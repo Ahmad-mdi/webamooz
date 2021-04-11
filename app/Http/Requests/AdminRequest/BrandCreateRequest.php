@@ -4,7 +4,7 @@ namespace App\Http\Requests\AdminRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryUpdateRequest extends FormRequest
+class BrandCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class CategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_fa' => 'required',
-            'title_en' => 'nullable',
+            'name' => 'required|unique:brands,name',
+            'image' => 'required|mimes:jpg,png,jpeg,svg,mpeg|max:1024',
         ];
     }
 }

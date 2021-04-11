@@ -4,7 +4,7 @@ namespace App\Http\Requests\AdminRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryUpdateRequest extends FormRequest
+class ProductUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,13 @@ class CategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_fa' => 'required',
-            'title_en' => 'nullable',
+            'name' => 'required',
+            'slug' => 'required|alpha_dash',
+            'image' =>'nullable|mimes:jpg,png,jpeg,mpeg,svg|min:100|max:1024',
+            'description' => 'required|max:1500',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
+            'price' => 'required|integer|min:1000',
         ];
     }
 }

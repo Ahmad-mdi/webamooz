@@ -29,13 +29,13 @@ class CategoryController extends Controller
     {
         $categories = Category::query()->paginate(6); //for categoryList
         $selectCategory = Category::all(); //for selectCategory
-        return view('admin.categories.index',compact('categories','selectCategory'));
+        return view('admin.categories.index', compact('categories', 'selectCategory'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CategoryCreateRequest $request)
@@ -45,13 +45,13 @@ class CategoryController extends Controller
             'title_fa' => $request->get('title_fa'),
             'title_en' => $request->get('title_en'),
         ]);
-        return back()->with('success','دسته با موفقیت افزوده شد');
+        return back()->with('success', 'دسته با موفقیت افزوده شد');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -68,7 +68,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $categories = Category::all();
-        return view('admin.categories.edit',compact('category','categories'));
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
     /**
@@ -78,8 +78,16 @@ class CategoryController extends Controller
      * @param Category $category
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(CategoryUpdateRequest $request , Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
+        $categoryUnique = Category::query()
+            ->where('title_fa', $request->get('title_fa'))
+            ->where('id', '!=', $category->id)
+            ->exists();
+
+        if ($categoryUnique) {
+            return back()->withErrors(['عنوان فارسی دسته بندی تکراری است!']);
+        }
         $category->update([
             'parent_id' => $request->get('parent_id'),
             'title_fa' => $request->get('title_fa'),

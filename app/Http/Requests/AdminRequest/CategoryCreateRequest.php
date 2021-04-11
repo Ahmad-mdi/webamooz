@@ -25,7 +25,7 @@ class CategoryCreateRequest extends FormRequest
     {
         return [
             'title_fa' => 'required|unique:categories,title_fa',
-            'title_en' => 'unique:categories,title_en|nullable',
+            'title_en' => 'nullable|unique:categories,title_en',
         ];
     }
 

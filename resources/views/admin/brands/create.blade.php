@@ -5,7 +5,7 @@
         @csrf
         <input value="{{old('name')}}"  name="name" type="text" placeholder="نام برند" class="text">
         <label for="images">افزودن عکس:</label>
-        <input type="file" class="form-control" name="image">
+        <input type="file" class="form-control" name="image"> <br><br>
         <button class="btn btn-brand">اضافه کردن</button>
     </form>
 </div>
