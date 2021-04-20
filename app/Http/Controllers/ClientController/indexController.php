@@ -11,8 +11,8 @@ class indexController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('parent_id' , null)->get();
-        $brands = Brand::all();
-        return view('client.index',compact('categories','brands'));
+        /*$categories = Category::query()->where('parent_id' , null)->get();
+        $brands = Brand::all();*/
+        return view('client.index'/*,compact('categories','brands')*/);
     }
 }

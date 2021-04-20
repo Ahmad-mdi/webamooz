@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/client/css/responsive-rtl.css" />
     <link rel="stylesheet" type="text/css" href="/client/css/stylesheet-skin2.css" />
 
+    @yield('links')
     <!-- CSS Part End-->
 </head>
 <body>

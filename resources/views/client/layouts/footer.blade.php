@@ -98,6 +98,7 @@
 <script type="text/javascript" src="/client/js/jquery.dcjqaccordion.min.js"></script>
 <script type="text/javascript" src="/client/js/owl.carousel.min.js"></script>
 <script type="text/javascript" src="/client/js/custom.js"></script>
+@yield('scripts')
 <!-- JS Part End-->
 
 </body>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/admin/css/responsive_991.css" media="(max-width:991px)">
     <link rel="stylesheet" href="/admin/css/responsive_768.css" media="(max-width:768px)">
     <link rel="stylesheet" href="/admin/css/font.css">
+    @yield('links')
 </head>
 <body>
 
@@ -152,5 +153,6 @@
 </body>
 <script src="/admin/js/jquery-3.4.1.min.js"></script>
 <script src="/admin/js/js.js"></script>
+@yield('scripts')
 </html>
 
