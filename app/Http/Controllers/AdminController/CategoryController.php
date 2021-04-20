@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest\CategoryCreateRequest;
 use App\Http\Requests\AdminRequest\CategoryUpdateRequest;
 use App\Models\Category;
+use App\Models\PropertyGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -27,9 +29,16 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::query()->paginate(6); //for categoryList
-        $selectCategory = Category::all(); //for selectCategory
-        return view('admin.categories.index', compact('categories', 'selectCategory'));
+        /*if (Gate::denies('create-category')) {
+            abort(403);
+        }*/
+        /*$categories = Category::query()->paginate(6); //for categoryList
+        $selectCategory = Category::all(); //for selectCategory*/
+        return view('admin.categories.index', [
+            'categories' => Category::query()->paginate(6),
+            'selectCategory' => Category::all(),
+            'propertyGroup' => PropertyGroup::all(),
+        ]);
     }
 
     /**
@@ -40,11 +49,12 @@ class CategoryController extends Controller
      */
     public function store(CategoryCreateRequest $request)
     {
-        Category::query()->create([
+        $category = Category::query()->create([
             'parent_id' => $request->get('parent_id'),
             'title_fa' => $request->get('title_fa'),
             'title_en' => $request->get('title_en'),
         ]);
+        $category->propertyGroups()->attach($request->get('propertyGroups'));
         return back()->with('success', 'دسته با موفقیت افزوده شد');
     }
 
@@ -67,8 +77,12 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::all();
-        return view('admin.categories.edit', compact('category', 'categories'));
+        /*$categories = Category::all();*/
+        return view('admin.categories.edit',[
+            'categories' => Category::all(),
+            'category' => $category,
+            'propertyGroup' => PropertyGroup::all(),
+        ]);
     }
 
     /**
@@ -80,12 +94,13 @@ class CategoryController extends Controller
      */
     public function update(CategoryUpdateRequest $request, Category $category)
     {
-        $categoryUnique = Category::query()
+        //title_fa:
+        $categoryFaUnique = Category::query()
             ->where('title_fa', $request->get('title_fa'))
             ->where('id', '!=', $category->id)
             ->exists();
 
-        if ($categoryUnique) {
+        if ($categoryFaUnique) {
             return back()->withErrors(['عنوان فارسی دسته بندی تکراری است!']);
         }
         $category->update([
@@ -93,6 +108,7 @@ class CategoryController extends Controller
             'title_fa' => $request->get('title_fa'),
             'title_en' => $request->get('title_en'),
         ]);
+        $category->propertyGroups()->sync($request->get('propertyGroups'));
         return redirect(route('category.create'));
     }
 
@@ -104,6 +120,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $category->propertyGroups()->detach();
         $category->delete();
         return back();
     }

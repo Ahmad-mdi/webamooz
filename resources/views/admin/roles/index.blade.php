@@ -5,35 +5,27 @@
     <div class="main-content padding-0 categories">
         <div class="row no-gutters  ">
             <div class="col-12 margin-left-10 margin-bottom-15 border-radius-3">
-                <p class="box__title">دسته بندی ها</p>
+                <p class="box__title">نقش ها</p>
                 <div class="table__box">
                     <table class="table">
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>شناسه</th>
-                            <th>نام دسته بندی</th>
-                            <th>نام انگلیسی دسته بندی</th>
-                            <th>دسته پدر</th>
+                            <th>#</th>
+                            <th>عنوان</th>
                             <th>ویرایش</th>
                             <th>حذف</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($categories as $category)
+                        @foreach($roles as $role)
                             <tr role="row" class="">
-                                <td><a href="">{{$category->id}}</a></td>
-                                <td><a href="">{{$category->title_fa}}</a></td>
-                                <td>{{$category->title_en}}</td>
-                                @if (!optional($category->parent)->title_fa)
-                                    <td><b class="text-warning">والد</b></td>
-                                @else
-                                    <td>{{optional($category->parent)->title_fa}}</td>
-                                @endif
+                                <td><a href="">{{$role->id}}</a></td>
+                                <td><a href="">{{$role->title}}</a></td>
                                 <td>
-                                    <a href="{{route('category.edit',$category->id)}}" class="item-edit " title="ویرایش"></a>
+                                    <a href="{{route('role.edit',$role)}}" class="item-edit " title="ویرایش"></a>
                                 </td>
                                 <td>
-                                    <form action="{{route('category.destroy',$category->id)}}" method="post">
+                                    <form action="{{route('role.destroy',$role)}}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button class="item-delete bg-white" type="submit"></button>
@@ -44,10 +36,10 @@
                         </tbody>
                     </table>
                 </div>
-                {{$categories->links()}}
+                {{--{{$roles->links()}}--}}
 
             </div>
-            @include('admin.categories.create')
+            @include('admin.roles.create')
         </div>
     </div>
 

@@ -2,7 +2,7 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
             <li><a class="home_link" title="خانه" href="/">خانه</a></li>
-        @foreach($categories as $category)
+        {{--@foreach($categories as $category)
             <li class="dropdown"><a href="category.html">{{$category->title_fa}}</a>
                 <div class="dropdown-menu">
                     <ul>
@@ -22,8 +22,34 @@
                     </ul>
                 </div>
             </li>
-        @endforeach
+        @endforeach--}}
 
+            <li class="mega-menu dropdown sub"><a>دسته ها</a>
+                <span class="submore"></span><div class="dropdown-menu" style="margin-left: -1042.14px; display: none;">
+                    @foreach($categories as $category)
+                        <div class="column col-lg-2 col-md-3"><a href="category.html">{{$category->title_fa}}</a>
+                            <span class="submore"></span><div>
+                                <ul>
+                                    @foreach($category->children as $childrenCategory)
+                                        <li><a href="category.html">{{$childrenCategory->title_fa}} <span>@if($childrenCategory->children->count() > 0)›@endif</span></a>
+                                            @if($childrenCategory->children->count() > 0)
+                                                <span class="submore"></span>
+                                                <div class="dropdown-menu" style="display: none;">
+                                                    <ul>
+                                                        @foreach($childrenCategory->children as $submenu)
+                                                            <li><a href="category.html">{{$submenu->title_fa}}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </li>
             <li class="menu_brands dropdown"><a href="#">برند ها</a>
                 <div class="dropdown-menu">
                     @foreach($brands as $brand)
@@ -93,3 +119,5 @@
         </ul>
     </div>
 </div>
+
+

@@ -20,6 +20,21 @@
                         value="{{$parent->id}}">{{$parent->title_fa}}</option>
                 @endforeach
             </select>
+
+            <div class="form-group">
+                <p class="box__title margin-bottom-15">انتخاب  گروه مشخصات</p>
+                {{-- <input type="radio" id="selectAll"> انتخاب همه
+                 <input type="radio" id="disableAll"> غیرفعال همه--}}
+                <div class="row">
+                    @foreach($propertyGroup as $group)
+                        <div class="padding-bottom-10" style="margin-right: 5px;">
+                            <input
+                                @if($category->hasPropertyGroup($group)) checked @endif
+                                class="checked" type="checkbox" name="propertyGroups[]" value="{{$group->id}}"> <b>{{$group->title}}</b>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
             <button class="btn btn-brand">ویرایش</button>
         </form>
     </div>

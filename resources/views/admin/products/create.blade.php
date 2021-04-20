@@ -1,4 +1,4 @@
-<div class="col-4 bg-white">
+<div class="col-12 bg-white">
     <p class="box__title">ایجاد محصول جدید</p>
     @include('admin.layouts.errors')
     <form action="{{route('product.store')}}" method="post" class="padding-30" enctype="multipart/form-data">

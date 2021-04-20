@@ -4,7 +4,7 @@
 
     <div class="main-content padding-0 categories">
         <div class="row no-gutters  ">
-            <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+            <div class="col-12 margin-left-10 margin-bottom-15 border-radius-3">
                 <p class="box__title">محصولات</p>
                 <div class="table__box">
                     <table class="table">
@@ -18,6 +18,8 @@
                             <th>برند </th>
                             <th>تاریخ ایجاد </th>
                             <th>گالری</th>
+                            <th>ویژگی(مشخصات)</th>
+                            <th>تخفیف</th>
                             <th>ویرایش</th>
                             <th>حذف</th>
                         </tr>
@@ -32,12 +34,26 @@
                                 <td><a href="">{{$product->category->title_fa}}</a></td>
                                 <td><a href="">{{$product->brand->name}}</a></td>
                                 <td><a href="">{{Verta::instance($product->created_at)->format('Y-n-j')}}</a></td>
-                                <td><a href="{{route('product.gallery.index',$product->id)}}" class="text-warning">مشاهده</a></td>
+                                <td><a href="{{route('product.gallery.index',$product)}}" class="text-warning">مشاهده</a></td>
+                                <td><a href="{{route('product.properties.index',$product)}}" class="text-success">ویژگی</a></td>
                                 <td>
-                                    <a href="{{route('product.edit',$product->id)}}" class="item-edit " title="ویرایش"></a>
+                                    @if (!$product->has_discount)
+                                        <a href="{{route('product.discount.create',$product)}}" class="text-info">ایجاد تخفیف</a>
+                                    @else
+                                        {{$product->discount_value}}%
+                                        <form action="{{route('product.discount.destroy',['product'=>$product,'discount'=>$product->discount])}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="item-delete" style="color: red">حذف</button>
+                                        </form>
+                                        <a href="{{route('product.discount.edit',['product'=>$product,'discount'=>$product->discount])}}" class="item-edit text-info">ویرایش</a>
+                                    @endif
                                 </td>
                                 <td>
-                                    <form action="{{route('product.destroy',$product->id)}}" method="post">
+                                    <a href="{{route('product.edit',$product)}}" class="item-edit " title="ویرایش"></a>
+                                </td>
+                                <td>
+                                    <form action="{{route('product.destroy',$product)}}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button class="item-delete bg-white" type="submit"></button>

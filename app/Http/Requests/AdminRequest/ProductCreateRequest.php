@@ -26,7 +26,7 @@ class ProductCreateRequest extends FormRequest
         return [
             'name' => 'required',
             'slug' => 'required|unique:products,slug|alpha_dash',
-            'image' =>'required|mimes:jpg,png,jpeg,mpeg,svg|min:100|max:1024',
+            'image' =>'required|mimes:jpg,png,jpeg,mpeg,svg|max:1024',
             'description' => 'required|max:1500',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',

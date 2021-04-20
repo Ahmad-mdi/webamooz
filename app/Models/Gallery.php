@@ -10,7 +10,7 @@ class Gallery extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function product()
+    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(product::class);
     }

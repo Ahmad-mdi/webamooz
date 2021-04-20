@@ -1,7 +1,6 @@
 @extends('client.layouts.app')
 
 @section('content')
-
     <div id="container">
         <div class="container">
             <div class="row">
@@ -762,10 +761,16 @@
                     <div class="owl-carousel latest_category_carousel">
                         @foreach($parentCategory->getAllSubCategoryProducts() as $product)
                              <div class="product-thumb">
-                            <div class="image"><a href="{{route('productDetails.show',$product->id)}}"><img src="{{str_replace('public','storage',$product->image)}}" alt="{{$product->name}}" title="{{$product->name}}" class="img-responsive" /></a></div>
+                            <div class="image"><a href="{{route('client.productDetails.show',$product)}}"><img src="{{str_replace('public','storage',$product->image)}}" alt="{{$product->name}}" title="{{$product->name}}" class="img-responsive" /></a></div>
                             <div class="caption">
-                                <h4><a href="{{route('productDetails.show',$product->id)}}">{{$product->name}}</a></h4>
-                                <p class="price"> {{$product->price}} تومان </p>
+                                <h4><a href="{{route('client.productDetails.show',$product)}}">{{$product->name}}</a></h4>
+                                <p class="price">
+                                    <span class="price-new">{{number_format($product->price_with_discount)}} تومان </span>
+                                    @if ($product->has_discount)
+                                        <span class="price-old">{{number_format($product->price)}} تومان</span>
+                                        <span class="saving">{{$product->discount_value}}%</span>
+                                    @endif
+                                </p>
                                 <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
                             </div>
                             <div class="button-group">

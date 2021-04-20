@@ -26,13 +26,15 @@ class CategoryCreateRequest extends FormRequest
         return [
             'title_fa' => 'required|unique:categories,title_fa',
             'title_en' => 'nullable|unique:categories,title_en',
+            'propertyGroups' => 'required|exists:property_groups,id',
         ];
     }
 
-   /* public function messages()
+    /*public function messages()
     {
         return [
-          'title_fa.required' => 'فیلد دسته بندی فارسی نمیتواند خالی باشد'
+          'title_fa.required' => 'فیلد دسته بندی فارسی نمیتواند خالی باشد',
+          'parent_id.exists' => 'مقدار وارد شده صحیح نیست'
         ];
     }*/
 

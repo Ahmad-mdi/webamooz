@@ -5,7 +5,7 @@
     <div class="col-12 bg-white">
         <p class="box__title">ویرایش محصول {{$product->name}}</p>
         @include('admin.layouts.errors')
-        <form action="{{route('product.update',$product->id)}}" method="post" class="padding-30" enctype="multipart/form-data">
+        <form action="{{route('product.update',$product)}}" method="post" class="padding-30" enctype="multipart/form-data">
             @csrf
             @method('patch')
             <input value="{{$product->name}}"  name="name" type="text" placeholder="نام محصول" class="text">

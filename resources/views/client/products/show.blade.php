@@ -1,8 +1,7 @@
 @extends('client.layouts.app')
 
 @section('links')
-    <link rel="stylesheet" type="text/css" href="css/owl.transitions.css" />
-    <link rel="stylesheet" type="text/css" href="js/swipebox/src/css/swipebox.min.css">
+    <link rel="stylesheet" type="text/css" href="/Client/js/swipebox/src/css/swipebox.min.css">
 @endsection
 
 @section('content')
@@ -22,9 +21,28 @@
                         <h1 class="title" itemprop="name">{{$product->name}}</h1>
                         <div class="row product-info">
                             <div class="col-sm-6">
-                                <div class="image"><img class="img-responsive" itemprop="image" id="zoom_01" src="{{str_replace('public','/storage',$product->image)}}" title="لپ تاپ ایلین ور" alt="لپ تاپ ایلین ور" data-zoom-image="image/product/macbook_air_1-600x900.jpg" /> </div>
-                                <div class="center-block text-center"><span class="zoom-gallery"><i class="fa fa-search"></i> برای مشاهده گالری روی تصویر کلیک کنید</span></div>
-                                <div class="image-additional" id="gallery_01"> <a class="thumbnail" href="#" data-zoom-image="image/product/macbook_air_1-600x900.jpg" data-image="image/product/macbook_air_1-350x525.jpg" title="لپ تاپ ایلین ور"> <img src="image/product/macbook_air_1-66x99.jpg" title="لپ تاپ ایلین ور" alt = "لپ تاپ ایلین ور"/></a> <a class="thumbnail" href="#" data-zoom-image="image/product/macbook_air_4-600x900.jpg" data-image="image/product/macbook_air_4-350x525.jpg" title="لپ تاپ ایلین ور"><img src="image/product/macbook_air_4-66x99.jpg" title="لپ تاپ ایلین ور" alt="لپ تاپ ایلین ور" /></a> <a class="thumbnail" href="#" data-zoom-image="image/product/macbook_air_2-600x900.jpg" data-image="image/product/macbook_air_2-350x525.jpg" title="لپ تاپ ایلین ور"><img src="image/product/macbook_air_2-66x99.jpg" title="لپ تاپ ایلین ور" alt="لپ تاپ ایلین ور" /></a> <a class="thumbnail" href="#" data-zoom-image="image/product/macbook_air_3-600x900.jpg" data-image="image/product/macbook_air_3-350x525.jpg" title="لپ تاپ ایلین ور"><img src="image/product/macbook_air_3-66x99.jpg" title="لپ تاپ ایلین ور" alt="لپ تاپ ایلین ور" /></a> </div>
+                                <div class="image">
+                                    <img class="img-responsive" itemprop="image" id="zoom_01" src="{{str_replace('public','/storage',$product->image)}}" title="{{$product->name}}" alt="{{$product->name}}" data-zoom-image="{{str_replace('public','/storage',$product->image)}}" />
+                                </div>
+                                <div class="center-block text-center">
+                                    <span class="zoom-gallery">
+                                        <i class="fa fa-search"></i>
+                                        برای مشاهده گالری روی تصویر کلیک کنید
+                                    </span>
+                                </div>
+                                <div class="image-additional" id="gallery_01">
+
+                                    <a class="thumbnail" href="#" data-zoom-image="{{str_replace('public','/storage',$product->image)}}" data-image="{{str_replace('public','/storage',$product->image)}}" title="{{$product->name}}">
+                                        <img src="{{str_replace('public','/storage',$product->image)}}" title="{{$product->name}}" alt = "{{$product->name}}"/>
+                                    </a>
+
+                                    @foreach($product->galleries as $gallery)
+                                        <a class="thumbnail" href="#" data-zoom-image="{{str_replace('public','/storage',$gallery->path)}}" data-image="{{str_replace('public','/storage',$gallery->path)}}" title="{{$gallery->product->name}}">
+                                            <img src="{{str_replace('public','/storage',$gallery->path)}}" title="{{$gallery->product->name}}" alt = "{{$gallery->product->name}}"/>
+                                        </a>
+                                    @endforeach
+
+                                </div>
                             </div>
                             <div class="col-sm-6">
                                 <ul class="list-unstyled description">
@@ -34,7 +52,14 @@
                                     <li><b>وضعیت موجودی :</b> <span class="instock">موجود</span></li>
                                 </ul>
                                 <ul class="price-box">
-                                    <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span class="price-old">12 میلیون تومان</span> <span itemprop="price">{{$product->price}} تومان<span itemprop="availability" content="موجود"></span></span></li>
+                                    <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                        @if ($product->has_discount)
+                                            <span class="price-old">{{number_format($product->price)}}تومان</span>
+                                        @endif
+                                        <span itemprop="price">{{number_format($product->price_with_discount)}} تومان
+                                            <span itemprop="availability" content="موجود"></span>
+                                        </span>
+                                    </li>
                                     <li></li>
                                     <li>بدون مالیات : 9 میلیون تومان</li>
                                 </ul>
@@ -384,12 +409,11 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript" src="js/jquery.dcjqaccordion.min.js"></script>
-    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="js/jquery.elevateZoom-3.0.8.min.js"></script>
-    <script type="text/javascript" src="js/swipebox/lib/ios-orientationchange-fix.js"></script>
-    <script type="text/javascript" src="js/swipebox/src/js/jquery.swipebox.min.js"></script>
-    <script type="text/javascript" src="js/custom.js"></script>
+    <script type="text/javascript" src="/Client/js/jquery.dcjqaccordion.min.js"></script>
+    <script type="text/javascript" src="/Client/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="/Client/js/jquery.elevateZoom-3.0.8.min.js"></script>
+    <script type="text/javascript" src="/Client/js/swipebox/lib/ios-orientationchange-fix.js"></script>
+    <script type="text/javascript" src="/Client/js/swipebox/src/js/jquery.swipebox.min.js"></script>
     <script type="text/javascript">
         // Elevate Zoom for Product Page image
         $("#zoom_01").elevateZoom({
