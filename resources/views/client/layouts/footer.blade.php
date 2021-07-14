@@ -98,6 +98,26 @@
 <script type="text/javascript" src="/client/js/jquery.dcjqaccordion.min.js"></script>
 <script type="text/javascript" src="/client/js/owl.carousel.min.js"></script>
 <script type="text/javascript" src="/client/js/custom.js"></script>
+<script>
+    function likeProduct(productId){
+        $.ajax({
+           type: 'post',
+           url: '/likes/' + productId,
+            data:{
+               _token: "{{csrf_token()}}"
+            },
+            success:function (data){
+                var icon = $('#like-'+productId+'>.fa-heart');
+                if (icon.hasClass('like')){
+                    icon.removeClass('like')
+                }else {
+                    icon.addClass('like')
+                }
+                $('#likes_count').text(data.likes_count);
+            }
+        });
+    }
+</script>
 @yield('scripts')
 <!-- JS Part End-->
 

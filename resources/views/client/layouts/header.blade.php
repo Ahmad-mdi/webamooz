@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
+    <style>
+        .like {
+            color: red;
+        }
+    </style>
     <meta charset="UTF-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -35,6 +40,9 @@
                             <ul>
                                 <li class="mobile"><i class="fa fa-phone"></i>+21 9898777656</li>
                                 <li class="email"><a href="mailto:info@marketshop.com"><i class="fa fa-envelope"></i>info@marketshop.com</a></li>
+                                @auth
+                                    <li><a href="{{route('client.likes.wishList.index')}}">لیست علاقه مندی ها(<span id="likes_count">{{auth()->user()->likes->count()}}</span>)</a></li>
+                                @endauth
                                 <li class="wrap_custom_block hidden-sm hidden-xs"><a>بلاک سفارشی<b></b></a>
                                     <div class="dropdown-menu custom_block">
                                         <ul>

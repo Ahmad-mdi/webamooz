@@ -14,6 +14,7 @@ class ProductController extends Controller
     {
         return view('client.products.show',[
             'product' => $product,
+            'propertyGroups' => $product->category->propertyGroups,
             /*'categories' => Category::query()->where('parent_id',null)->get(),
             'brands' => Brand::all(),*/
         ]);

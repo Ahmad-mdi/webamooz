@@ -11,10 +11,12 @@
             <input value="{{$role->title}}"  name="title" type="text" placeholder="ویرایش عنوان نقش" class="text">
             <div class="form-group">
                 <label>ویرایش دسترسی:</label>
+                <input type="radio" id="selectAll"> انتخاب همه
+                <input type="radio" id="disableAll"> غیرفعال همه
                 <div class="row">
                     @foreach($permissions as $permission)
                         <div class="padding-bottom-10" style="margin-right: 5px;">
-                            <input @if($role->hasPermission($permission)) checked @endif type="checkbox" name="permissions[]" value="{{$permission->id}}"> <b>{{$permission->label}}</b>
+                            <input class="checked" @if($role->hasPermission($permission)) checked @endif type="checkbox" name="permissions[]" value="{{$permission->id}}"> <b>{{$permission->label}}</b>
                         </div>
                     @endforeach
                 </div>
@@ -23,4 +25,8 @@
         </form>
     </div>
 
+@endsection
+
+@section('scripts')
+    @include('admin.layouts.checkbox')
 @endsection

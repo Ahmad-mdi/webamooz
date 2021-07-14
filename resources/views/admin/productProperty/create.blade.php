@@ -12,7 +12,7 @@
                     @foreach($group->properties as $property)
                         <div class="form-group col-sm-6">
                             <div class="col-sm-2">
-                                <label for="title">{{$property->title}}</label>
+                                <label for="title">{{$property->title}}:</label>
                             </div>
                             <div class="col-sm-10 padding-0-18">
                                 <input type="text" name="properties[{{$property->id}}][value]" value="{{$property->getValueForProduct($product)}}" class="text">

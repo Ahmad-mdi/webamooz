@@ -25,7 +25,12 @@ class ProductPropertyController extends Controller
 
     public function store(Request $request , product $product)
     {
-        $product->properties()->sync($request->get('properties'));
+        $properties = collect($request->get('properties'))->filter(function ($item){
+           if (!empty($item['value'])) {
+               return $item;
+           }
+        });
+        $product->properties()->sync($properties);
         return back();
     }
 }

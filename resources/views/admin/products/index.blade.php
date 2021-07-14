@@ -19,6 +19,7 @@
                             <th>تاریخ ایجاد </th>
                             <th>گالری</th>
                             <th>ویژگی(مشخصات)</th>
+                            <th>نظرات</th>
                             <th>تخفیف</th>
                             <th>ویرایش</th>
                             <th>حذف</th>
@@ -36,6 +37,7 @@
                                 <td><a href="">{{Verta::instance($product->created_at)->format('Y-n-j')}}</a></td>
                                 <td><a href="{{route('product.gallery.index',$product)}}" class="text-warning">مشاهده</a></td>
                                 <td><a href="{{route('product.properties.index',$product)}}" class="text-success">ویژگی</a></td>
+                                <td><a href="{{route('products.comments.index',$product)}}" class="text-warning">نظر</a></td>
                                 <td>
                                     @if (!$product->has_discount)
                                         <a href="{{route('product.discount.create',$product)}}" class="text-info">ایجاد تخفیف</a>

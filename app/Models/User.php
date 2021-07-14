@@ -50,6 +50,14 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany(product::class, 'likes')
+            ->withTimestamps();
+    }
+
+    //**********************************************************************
+
     public static function generateOtp(Request $request)
     {
         $otp = random_int(11111, 99999);
@@ -69,5 +77,16 @@ class User extends Authenticatable
         //send otp by email to user
         Mail::to($user->email)->send(new OtpMail($otp));
         return $user;
+    }
+
+    public function likeProduct(product $product)
+    {
+        $isLikedBefore = $this->likes()
+            ->where('id', $product->id)
+            ->exists();
+        if ($isLikedBefore) {
+            return $this->likes()->detach($product);
+        }
+        return $this->likes()->attach($product);
     }
 }

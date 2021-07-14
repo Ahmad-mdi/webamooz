@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 class product extends Model
@@ -19,13 +20,13 @@ class product extends Model
 
     public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
 
     public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Brand::class,'brand_id');
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
 
@@ -46,16 +47,29 @@ class product extends Model
             ->withTimestamps();
     }
 
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes')
+            ->withTimestamps();
+    }
+
+    //***********************************************************
+
     public function addGallery(Request $request)
     {
         $path = $request->file('file')->storeAs(
-          'public/productGallery' , $request->file('file')->getClientOriginalName(),
+            'public/productGallery', $request->file('file')->getClientOriginalName(),
         );
 
         $this->galleries()->create([
-           'product_id' => $this->id,
-           'path' => $path,
-           'mime' => $request->file('file')->getClientMimeType(),
+            'product_id' => $this->id,
+            'path' => $path,
+            'mime' => $request->file('file')->getClientMimeType(),
         ]);
     }
 
@@ -70,10 +84,10 @@ class product extends Model
     {
         if (!$this->has_discount) {
             $this->discount()->create([
-               'product_id' => $this->id,
-               'value' => $request->get('value'),
+                'product_id' => $this->id,
+                'value' => $request->get('value'),
             ]);
-        }else {
+        } else {
             $this->discount->update([
                 'product_id' => $this->id,
                 'value' => $request->get('value'),
@@ -118,6 +132,21 @@ class product extends Model
 
     public function getRouteKeyName(): string
     {
-        return 'slug';
+        if (request()->route()->getPrefix() == '/adminPanel'
+            || request()->routeIs(['client.index','client.likes.wishList.index'])) {
+            return 'slug';
+        } else {
+            $identifier = Route::current()->parameters()['product'];
+            if (!ctype_digit($identifier)) {
+                return 'slug';
+            }
+            return 'id';
+        }
+    }
+
+    // for liked products:
+    public function getIsLikedAttribute(): bool
+    {
+        return $this->likes()->where('user_id',auth()->id())->exists(); //return bool
     }
 }
