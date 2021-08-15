@@ -52,7 +52,7 @@
                                                 </p>
                                             </div>
                                             <div class="button-group">
-                                                <button class="btn-primary" type="button" onClick="cart.add('42');"><span>افزودن به سبد</span></button>
+                                                <button class="btn-primary" type="button" onClick="addToCart({{$product->id}});"><span>افزودن به سبد</span></button>
                                                 <div class="add-to-links">
                                                     @auth
                                                         <button id="like-{{$product->id}}" type="button" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick="likeProduct({{$product->id}})">
@@ -719,11 +719,13 @@
                                 <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
                             </div>
                             <div class="button-group">
-                                <button class="btn-primary" type="button" onClick=""><span>افزودن به سبد</span></button>
+                                <button class="btn-primary" type="button" onClick="addToCart({{$product->id}})"><span>افزودن به سبد</span></button>
                                 <div class="add-to-links">
-                                    <button id="like-{{$product->id}}" type="button" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick="likeProduct({{$product->id}})">
-                                        <i class="fa fa-heart" @if($product->is_liked) like @endif></i>
-                                    </button>
+                                    @auth
+                                        <button id="like-{{$product->id}}" type="button" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick="likeProduct({{$product->id}})">
+                                            <i class="fa fa-heart" @if($product->is_liked) like @endif></i>
+                                        </button>
+                                    @endauth
                                     <button type="button" data-toggle="tooltip" title="افزودن به مقایسه" onClick=""><i class="fa fa-exchange"></i></button>
                                 </div>
                             </div>

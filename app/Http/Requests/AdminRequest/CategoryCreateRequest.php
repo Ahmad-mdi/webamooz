@@ -26,7 +26,7 @@ class CategoryCreateRequest extends FormRequest
         return [
             'title_fa' => 'required|unique:categories,title_fa',
             'title_en' => 'nullable|unique:categories,title_en',
-            'propertyGroups' => 'required|exists:property_groups,id',
+            'propertyGroups' => 'nullable|exists:property_groups,id',
         ];
     }
 

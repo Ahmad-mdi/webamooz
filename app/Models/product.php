@@ -17,6 +17,10 @@ class product extends Model
     protected $guarded = [];
 
     protected $dates = ['deleted_at'];
+    protected $appends = [
+      'price_with_discount',
+        'image_path'
+    ];
 
     public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -148,5 +152,10 @@ class product extends Model
     public function getIsLikedAttribute(): bool
     {
         return $this->likes()->where('user_id',auth()->id())->exists(); //return bool
+    }
+
+    public function getImagePathAttribute()
+    {
+        return str_replace('public','/storage',$this->image);
     }
 }

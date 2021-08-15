@@ -117,6 +117,62 @@
             }
         });
     }
+
+    function addToCart(productId)
+    {
+        var quantity = 1;
+        if ($('#input-quantity').length){
+            quantity = $('#input-quantity').val();
+        }
+        $.ajax({
+           type: 'post',
+           url: '/cart/'+ productId,
+           data:{
+               _token: "{{csrf_token()}}",
+               productId: productId,
+               quantity: quantity,
+           },
+            success:function (data){
+                //for header page:
+                $('#total_items').text(data.cart.total_items);
+                $('#total_price').text(data.cart.total_price);
+                // var productPrice = data.cart.price_with_discount;
+                
+                //append html code:
+                var product = data.cart[productId]['product'];
+                var productQty = data.cart[productId]['quantity'];
+                if (!$('#cart-row'+productId).length){
+                    $('#cart-table-body:last-child').append(
+                        '<tr id="cart-row'+product.id+'">'
+                        +'<td class="text-center"><a href="/productDetails/'+product.slug+'"> <img width="100" height="100" class="img-thumbnail" title="'+product.name+'" alt="'+product.name+'" src="'+product.image_path+'"> </a> </td>'
+                        +'<td class="text-left"> <a href="/productDetails/'+product.slug+'">'+product.name+'</a></td>'
+                        +'<td class="text-right">x '+productQty+'</td>'
+                        +'<td class="text-right">'+parseInt(product.price_with_discount).toLocaleString()+' تومان</td>'
+                        +'<td class="text-center"> <button class="btn btn-danger btn-xs remove" title="حذف" onClick="removeFromCart('+product.id+')" type="button"> <i class="fa fa-times"></i></button></td>'
+                        +'</tr>'
+                    );
+                    $('.cart-totalPrice').text(data.cart.total_price);
+                }
+            },
+        });
+    }
+
+    function removeFromCart(productId)
+    {
+        $.ajax({
+            type: 'delete',
+            url: '/cart/'+ productId,
+            data:{
+                _token: "{{csrf_token()}}",
+                productId: productId,
+            },
+            success:function (data){
+                $('#total_items').text(data.cart.total_items);
+                $('#total_price').text(data.cart.total_price);
+                $('#cart-row'+productId).remove();
+            },
+        });
+    }
 </script>
 @yield('scripts')
 <!-- JS Part End-->

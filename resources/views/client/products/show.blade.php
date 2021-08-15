@@ -84,13 +84,15 @@
                                                 <a class="qtyBtn mines" href="javascript:void(0);">-</a>
                                                 <div class="clear"></div>
                                             </div>
-                                            <button type="button" id="button-cart" class="btn btn-primary btn-lg">افزودن به سبد</button>
+                                            <button type="button" id="button-cart" onclick="addToCart({{$product->id}});" class="btn btn-primary btn-lg">افزودن به سبد</button>
                                         </div>
                                         <div>
-                                            <button id="like-{{$product->id}}" type="button" class="wishlist" onClick=likeProduct({{$product->id}});>
-                                                <i class="fa fa-heart @if($product->is_liked)  like @endif"></i>
-                                                افزودن به علاقه مندی ها
-                                            </button>
+                                            @auth
+                                                <button id="like-{{$product->id}}" type="button" class="wishlist" onClick=likeProduct({{$product->id}});>
+                                                    <i class="fa fa-heart @if($product->is_liked)  like @endif"></i>
+                                                    افزودن به علاقه مندی ها
+                                                </button>
+                                            @endauth
                                             <br />
                                             <button type="button" class="wishlist" onClick="">
                                                 <i class="fa fa-exchange"></i>

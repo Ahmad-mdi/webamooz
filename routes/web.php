@@ -15,6 +15,7 @@ use App\Http\Controllers\AdminController\PropertyGroupController;
 use App\Http\Controllers\AdminController\RoleController;
 use App\Http\Controllers\AdminController\SliderController;
 use App\Http\Controllers\AdminController\UserController;
+use App\Http\Controllers\ClientController\CartController;
 use App\Http\Controllers\ClientController\CommentController;
 use App\Http\Controllers\AdminController\CommentController as AdminCommentController;
 use App\Http\Controllers\ClientController\LikeController;
@@ -50,6 +51,11 @@ Route::prefix('')->name('client.')->group(function () {
     Route::get('register/otp/{user}', [RegisterController::class, 'otp'])->name('register.otp');
     Route::post('register/verifyOtp/{user}', [RegisterController::class, 'verifyOtp'])->name('register.verifyOtp');
     Route::delete('logout', [RegisterController::class, 'logout'])->name('logout');
+
+    //Cart:
+    Route::get('/cart',[CartController::class,'index'])->name('cart.index');
+    Route::post('/cart/{product}',[CartController::class,'store'])->name('cart.store');
+    Route::delete('/cart/{product}',[CartController::class,'destroy'])->name('cart.destroy');
 });
 
 //************************************************************************************
