@@ -137,7 +137,7 @@
                 $('#total_items').text(data.cart.total_items);
                 $('#total_price').text(data.cart.total_price);
                 // var productPrice = data.cart.price_with_discount;
-                
+
                 //append html code:
                 var product = data.cart[productId]['product'];
                 var productQty = data.cart[productId]['quantity'];
