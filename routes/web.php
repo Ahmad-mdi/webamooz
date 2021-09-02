@@ -19,6 +19,7 @@ use App\Http\Controllers\ClientController\CartController;
 use App\Http\Controllers\ClientController\CommentController;
 use App\Http\Controllers\AdminController\CommentController as AdminCommentController;
 use App\Http\Controllers\ClientController\LikeController;
+use App\Http\Controllers\ClientController\OrderController;
 use App\Http\Controllers\ClientController\ProductController as ClientProductController;
 use App\Http\Controllers\ClientController\indexController;
 use App\Http\Controllers\ClientController\RegisterController;
@@ -56,6 +57,10 @@ Route::prefix('')->name('client.')->group(function () {
     Route::get('/cart',[CartController::class,'index'])->name('cart.index');
     Route::post('/cart/{product}',[CartController::class,'store'])->name('cart.store');
     Route::delete('/cart/{product}',[CartController::class,'destroy'])->name('cart.destroy');
+
+    //order:
+    Route::get('/orders/create',[OrderController::class,'create'])->name('orders.create');
+    Route::post('/orders/store',[OrderController::class,'store'])->name('orders.store');
 });
 
 //************************************************************************************

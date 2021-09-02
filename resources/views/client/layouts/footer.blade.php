@@ -133,11 +133,11 @@
                quantity: quantity,
            },
             success:function (data){
+                $('#product-quantity-'+productId).text('x'+quantity);
+                $('.cart-totalPrice').text(parseInt(data.cart.total_price).toLocaleString());
                 //for header page:
                 $('#total_items').text(data.cart.total_items);
                 $('#total_price').text(data.cart.total_price);
-                // var productPrice = data.cart.price_with_discount;
-
                 //append html code:
                 var product = data.cart[productId]['product'];
                 var productQty = data.cart[productId]['quantity'];
@@ -151,7 +151,6 @@
                         +'<td class="text-center"> <button class="btn btn-danger btn-xs remove" title="حذف" onClick="removeFromCart('+product.id+')" type="button"> <i class="fa fa-times"></i></button></td>'
                         +'</tr>'
                     );
-                    $('.cart-totalPrice').text(data.cart.total_price);
                 }
             },
         });
@@ -170,6 +169,35 @@
                 $('#total_items').text(data.cart.total_items);
                 $('#total_price').text(data.cart.total_price);
                 $('#cart-row'+productId).remove();
+                $('#cart-index').remove();
+                $('.cart-totalPrice').text(data.cart.total_price);
+            },
+        });
+    }
+
+    function updateCart(productId){
+        var quantity = 1;
+        if ($('#input-quantity'+productId).length){
+            quantity = $('#input-quantity'+productId).val();
+        }
+        $.ajax({
+            type: 'post',
+            url: '/cart/'+ productId,
+            data:{
+                _token: "{{csrf_token()}}",
+                productId: productId,
+                quantity: quantity,
+            },
+            success:function (data){
+                //for header page:
+                var product = data.cart[productId]['product'];
+                var productQty = data.cart[productId]['quantity'];
+                //convert after success data:
+                $('#total_items').text(data.cart.total_items);
+                $('#total_price').text(data.cart.total_price);
+                $('.cart-totalPrice').text(parseInt(data.cart.total_price).toLocaleString());//sum price
+                $('#totals-price-'+productId).text(parseInt(product.price_with_discount * productQty).toLocaleString());
+                $('#product-quantity-'+productId).text('x'+productQty);//for mini-cart
             },
         });
     }

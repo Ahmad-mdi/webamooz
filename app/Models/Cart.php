@@ -56,7 +56,7 @@ class Cart
                 }
             }
         }
-        return number_format($totalPrice);
+        return $totalPrice;
     }
 
     public static function getSessionCart()
@@ -83,6 +83,11 @@ class Cart
         session()->put([
             'cart' => $cart,
         ]);
+    }
+
+    public static function removeAllItems()
+    {
+        session()->forget('cart');
     }
 
     /*public static function getPriceWithDiscount(product $product)

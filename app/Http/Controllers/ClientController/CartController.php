@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    public function index()
+    {
+        return view('client.cart.index',[
+           'items' => Cart::getItems(),
+           'total_items' => Cart::totalItems(),
+           'total_price' => Cart::totalPrice(),
+        ]);
+    }
     public function store(Request $request,product $product)
     {
         Cart::new($product,$request);

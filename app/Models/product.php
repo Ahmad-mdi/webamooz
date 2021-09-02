@@ -137,7 +137,9 @@ class product extends Model
     public function getRouteKeyName(): string
     {
         if (request()->route()->getPrefix() == '/adminPanel'
-            || request()->routeIs(['client.index','client.likes.wishList.index'])) {
+            || request()->routeIs([
+                'client.index','client.likes.wishList.index','client.orders.create','client.cart.index'
+            ])) {
             return 'slug';
         } else {
             $identifier = Route::current()->parameters()['product'];

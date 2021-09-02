@@ -16,7 +16,7 @@
                     <td class="text-left">
                         <a href="{{route('client.productDetails.show',$product)}}">{{$product->name}}</a>
                     </td>
-                    <td class="text-right">x {{$productQty}}</td>
+                    <td class="text-right" id="product-quantity-{{$product->id}}">x {{$productQty}}</td>
                     <td class="text-right">{{number_format($product->price_with_discount)}} تومان</td>
                     <td class="text-center">
                         <button class="btn btn-danger btn-xs remove" title="حذف" onClick="removeFromCart({{$product->id}})" type="button">
@@ -45,11 +45,12 @@
                 <a href="{{route('client.cart.index')}}" class="btn btn-primary">
                     <i class="fa fa-shopping-cart"></i> مشاهده سبد
                 </a>&nbsp;&nbsp;&nbsp;
-                <a href="checkout.html" class="btn btn-primary">
-                    <i class="fa fa-share"></i> تسویه حساب
+                <a href="{{route('client.orders.create')}}" class="btn btn-primary">
+                    <i class="fa fa-share"></i> ثبت سفارش
                 </a>
             </p>
         </div>
     </li>
 </ul>
+
 
